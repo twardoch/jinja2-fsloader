@@ -1,12 +1,11 @@
-# coding: utf-8
-
 import functools
+
 import contexter
 
 try:
     from unittest import mock
 except ImportError:
-    import mock
+    pass
 
 
 def in_context(func):
@@ -14,4 +13,5 @@ def in_context(func):
     def new_func(self, *args, **kwargs):
         with contexter.Contexter() as ctx:
             return func(self, ctx, *args, **kwargs)
+
     return new_func

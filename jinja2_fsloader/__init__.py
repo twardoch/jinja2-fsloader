@@ -1,18 +1,18 @@
-# coding: utf-8
-"""jinja2_fsloader - A Jinja2 template loader using PyFilesystem2.
-"""
+"""jinja2_fsloader - A Jinja2 template loader using PyFilesystem2."""
+
 import sys
 
 import fs
-import fs.path
 import fs.errors
+import fs.path
 import jinja2
 import pkg_resources
 
-
 __author__ = "Martin Larralde <martin.larralde@ens-paris-saclay.fr>"
 __license__ = "MIT"
-__version__ = pkg_resources.resource_string(__name__, "_version.txt").decode('utf-8').strip()
+__version__ = (
+    pkg_resources.resource_string(__name__, "_version.txt").decode("utf-8").strip()
+)
 
 
 class FSLoader(jinja2.BaseLoader):
@@ -37,7 +37,9 @@ class FSLoader(jinja2.BaseLoader):
 
     """
 
-    def __init__(self, template_fs, encoding='utf-8', use_syspath=False, fs_filter=None):
+    def __init__(
+        self, template_fs, encoding="utf-8", use_syspath=False, fs_filter=None
+    ):
         self.filesystem = fs.open_fs(template_fs)
         self.use_syspath = use_syspath
         self.encoding = encoding
@@ -49,9 +51,11 @@ class FSLoader(jinja2.BaseLoader):
             raise jinja2.TemplateNotFound(template)
         try:
             mtime = self.filesystem.getdetails(template).modified
-            reload = lambda: self.filesystem.getdetails(template).modified > mtime
+            def reload():
+                return self.filesystem.getdetails(template).modified > mtime
         except fs.errors.MissingInfoNamespace:
-            reload = lambda: True
+            def reload():
+                return True
         with self.filesystem.open(template, encoding=self.encoding) as input_file:
             source = input_file.read()
         if self.use_syspath:
@@ -69,10 +73,11 @@ class FSLoader(jinja2.BaseLoader):
 
 
 if sys.version_info[0] == 2:
+
     def _to_unicode(path):
-        """Convert str in Python 2 to unicode.
-        """
-        return path.decode('utf-8') if type(path) is not unicode else path
+        """Convert str in Python 2 to unicode."""
+        return path.decode("utf-8") if type(path) is not unicode else path
 else:
+
     def _to_unicode(path):
         return path
