@@ -10,6 +10,12 @@ Unreleased_
 -----------
 .. _Unreleased: https://github.com/althonos/jinja2-fsloader/compare/v0.3.0...HEAD
 
+Changed
+'''''''
+- Upgraded to GitHub-native Dependabot for dependency management (#7)
+- Updated .gitignore with additional IDE-specific patterns
+- Minor code style improvements
+
 
 v0.3.0_ - 2020-01-29
 --------------------

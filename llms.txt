@@ -1,0 +1,945 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.github/
+  dependabot.yml
+ci/
+  requirements.txt
+jinja2_fsloader/
+  __init__.py
+  _version.txt
+tests/
+  __init__.py
+  test_fsloader.py
+  test_misc.py
+  utils.py
+.gitignore
+.travis.yml
+CHANGELOG.rst
+COPYING
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".github/dependabot.yml">
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+</file>
+
+<file path="ci/requirements.txt">
+coverage
+codecov
+codacy-coverage
+twine
+contexter
+</file>
+
+<file path="tests/__init__.py">
+import os
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(__file__, "..", "..")))
+</file>
+
+<file path="tests/test_misc.py">
+import sys
+import unittest
+
+from jinja2_fsloader import _to_unicode
+
+
+class TestMisc(unittest.TestCase):
+    def test_to_unicode(self):
+        expected = _to_unicode("abc")
+        if sys.version_info[0] == 2:
+            self.assertIsInstance(expected, unicode)
+        else:
+            self.assertIsInstance(expected, str)
+</file>
+
+<file path="tests/utils.py">
+import functools
+
+import contexter
+
+try:
+    from unittest import mock
+except ImportError:
+    pass
+
+
+def in_context(func):
+    @functools.wraps(func)
+    def new_func(self, *args, **kwargs):
+        with contexter.Contexter() as ctx:
+            return func(self, ctx, *args, **kwargs)
+
+    return new_func
+</file>
+
+<file path="COPYING">
+MIT License
+
+Copyright (c) 2019-2020 Martin Larralde
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</file>
+
+<file path="MANIFEST.in">
+include jinja2_fsloader/_version.txt
+include COPYING
+include README.rst
+include CHANGELOG.rst
+</file>
+
+<file path="setup.py">
+#!/usr/bin/env python
+
+import setuptools
+
+setuptools.setup()
+</file>
+
+<file path="CHANGELOG.rst">
+Changelog
+=========
+
+All notable changes to this project will be documented in this file.
+
+The format is based on `Keep a Changelog <http://keepachangelog.com>`_ and this
+project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`_.
+
+Unreleased_
+-----------
+.. _Unreleased: https://github.com/althonos/jinja2-fsloader/compare/v0.3.0...HEAD
+
+
+v0.3.0_ - 2020-01-29
+--------------------
+.. _v0.3.0: https://github.com/althonos/jinja2-fsloader/compare/v0.2.0...v0.3.0
+
+Added
+'''''
+- ``fs_filter`` parameter to filter files being considered as templates (#5)
+
+
+v0.2.0_ - 2019-08-07
+--------------------
+.. _v0.2.0: https://github.com/althonos/jinja2-fsloader/compare/v0.1.3...v0.2.0
+
+Fixed
+'''''
+- Fix support for Python 2 (#3).
+
+
+v0.1.3_ - 2019-08-04
+--------------------
+.. _v0.1.3: https://github.com/althonos/jinja2-fsloader/compare/v0.1.2...v0.1.3
+
+Changed
+'''''''
+- Relax Pyfilesystem2 version in install dependencies.
+
+
+v0.1.2_ - 2019-07-13
+--------------------
+.. _v0.1.2: https://github.com/althonos/jinja2-fsloader/compare/v0.1.1...v0.1.2
+
+Fixed
+'''''
+- Add ``mock`` to test dependencies.
+
+
+v0.1.1_ - 2019-07-12
+--------------------
+.. _v0.1.1: https://github.com/althonos/jinja2-fsloader/compare/v0.1.0...v0.1.1
+
+Fixed
+'''''
+- Add ``MANIFEST.in`` file to make sure ``_version.txt`` is included in ``sdist``.
+
+
+v0.1.0_ - 2019-01-21
+--------------------
+.. _v0.1.0: https://github.com/althonos/jinja2-fsloader/compare/ffd413a...v0.1.0
+
+Initial release.
+</file>
+
+<file path="tests/test_fsloader.py">
+import os
+import unittest
+
+import fs
+import jinja2
+from fs.multifs import MultiFS
+from jinja2_fsloader import FSLoader
+
+from .utils import in_context
+
+
+class TestFSLoader(unittest.TestCase):
+    @staticmethod
+    def build_env(filesystem, *args, **kwargs):
+        return jinja2.Environment(
+            loader=FSLoader(filesystem, *args, **kwargs),
+            autoescape=jinja2.select_autoescape(["html", "xml"]),
+        )
+
+    @staticmethod
+    def build_fs(filesystem, ctx):
+        filesystem.makedir("dir")
+        with ctx:
+            nested = ctx << filesystem.open("dir/nested.j2", "w")
+            nested.write("<html>this is a nested template !</html>")
+        with ctx:
+            top = ctx << filesystem.open("top.j2", "w")
+            top.write("<html>this is a top level template !</html>")
+
+    @staticmethod
+    def build_zipfs():
+        with fs.open_fs("zip://test.zip", create=True) as filesystem:
+            filesystem.writetext(
+                "template_in_zip.j2", "<html>this template is in a zip</html>"
+            )
+
+    @in_context
+    def test_get_source_nosyspath_nourl(self, ctx):
+        testfs = ctx << fs.open_fs("mem://")
+        self.build_fs(testfs, ctx)
+
+        env = self.build_env(testfs)
+        template = env.get_template("dir/nested.j2")
+        self.assertEqual(template.render(), "<html>this is a nested template !</html>")
+        template = env.get_template("top.j2")
+        self.assertEqual(
+            template.render(), "<html>this is a top level template !</html>"
+        )
+        self.assertRaises(jinja2.TemplateNotFound, env.get_template, "other.j2")
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(path, "dir/nested.j2")
+
+        env = self.build_env(testfs, use_syspath=True)
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(path, "dir/nested.j2")
+
+    @in_context
+    def test_get_source_syspath(self, ctx):
+        testfs = ctx << fs.open_fs("temp://")
+        self.build_fs(testfs, ctx)
+
+        env = self.build_env(testfs)
+        template = env.get_template("dir/nested.j2")
+        self.assertEqual(template.render(), "<html>this is a nested template !</html>")
+        template = env.get_template("top.j2")
+        self.assertEqual(
+            template.render(), "<html>this is a top level template !</html>"
+        )
+        self.assertRaises(jinja2.TemplateNotFound, env.get_template, "other.j2")
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(path, "dir/nested.j2")
+
+        env = self.build_env(testfs, use_syspath=True)
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(path, os.path.join(testfs.getsyspath("/"), "dir", "nested.j2"))
+
+    @in_context
+    def test_get_source_nomtime(self, ctx):
+        testfs = ctx << fs.open_fs("temp://")
+        _getinfo = testfs.getinfo
+        testfs.getinfo = lambda path, namespaces=None: _getinfo(path)
+        self.build_fs(testfs, ctx)
+
+        env = self.build_env(testfs)
+        template = env.get_template("dir/nested.j2")
+        self.assertEqual(template.render(), "<html>this is a nested template !</html>")
+        template = env.get_template("top.j2")
+        self.assertEqual(
+            template.render(), "<html>this is a top level template !</html>"
+        )
+        self.assertRaises(jinja2.TemplateNotFound, env.get_template, "other.j2")
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(path, "dir/nested.j2")
+
+        env = self.build_env(testfs, use_syspath=True)
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(path, os.path.join(testfs.getsyspath("/"), "dir", "nested.j2"))
+
+    @in_context
+    def test_get_source_nosyspath_url(self, ctx):
+        testfs = ctx << fs.open_fs("temp://")
+        testfs.getinfo
+        testfs.hassyspath = lambda path: False
+        self.build_fs(testfs, ctx)
+
+        env = self.build_env(testfs)
+        template = env.get_template("dir/nested.j2")
+        self.assertEqual(template.render(), "<html>this is a nested template !</html>")
+        template = env.get_template("top.j2")
+        self.assertEqual(
+            template.render(), "<html>this is a top level template !</html>"
+        )
+        self.assertRaises(jinja2.TemplateNotFound, env.get_template, "other.j2")
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(path, "dir/nested.j2")
+
+        env = self.build_env(testfs, use_syspath=True)
+        source, path, _ = env.loader.get_source(None, "dir/nested.j2")
+        self.assertEqual(
+            path, "{}/dir/nested.j2".format(testfs.geturl("/").rstrip("/"))
+        )
+
+    @in_context
+    def test_list_templates(self, ctx):
+        testfs = ctx << fs.open_fs("temp://")
+        testfs.getinfo
+        testfs.hassyspath = lambda path: False
+        self.build_fs(testfs, ctx)
+
+        env = self.build_env(testfs)
+        self.assertEqual(env.loader.list_templates(), ["dir/nested.j2", "top.j2"])
+
+    @in_context
+    def test_multiple_fs(self, ctx):
+        testfs = ctx << fs.open_fs("mem://")
+        self.build_fs(testfs, ctx)
+        self.build_zipfs()
+
+        multi_fs = MultiFS()
+        multi_fs.add_fs("memory", testfs)
+        multi_fs.add_fs("zip", fs.open_fs("zip://test.zip"))
+
+        env = self.build_env(multi_fs)
+        template = env.get_template("dir/nested.j2")
+        self.assertEqual(template.render(), "<html>this is a nested template !</html>")
+        template = env.get_template("template_in_zip.j2")
+        self.assertEqual(template.render(), "<html>this template is in a zip</html>")
+        self.assertRaises(jinja2.TemplateNotFound, env.get_template, "other.j2")
+        source, path, _ = env.loader.get_source(None, "template_in_zip.j2")
+        self.assertEqual(path, "template_in_zip.j2")
+
+    @in_context
+    def test_multiple_fs_with_use_syspath(self, ctx):
+        testfs = ctx << fs.open_fs("mem://")
+        self.build_fs(testfs, ctx)
+        self.build_zipfs()
+
+        multi_fs = MultiFS()
+        multi_fs.add_fs("memory", testfs)
+        multi_fs.add_fs("zip", fs.open_fs("zip://test.zip"))
+
+        env = self.build_env(multi_fs, use_syspath=True)
+        source, path, _ = env.loader.get_source(None, "template_in_zip.j2")
+        self.assertEqual(path, "template_in_zip.j2")
+        os.unlink("test.zip")
+</file>
+
+<file path=".gitignore">
+# Created by https://www.gitignore.io/api/python
+# Edit at https://www.gitignore.io/?templates=python
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+### Python Patch ###
+.venv/
+
+# End of https://www.gitignore.io/api/python
+
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+# .idea/artifacts
+# .idea/compiler.xml
+# .idea/jarRepositories.xml
+# .idea/modules.xml
+# .idea/*.iml
+# .idea/modules
+# *.iml
+# *.ipr
+
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Editor-based Rest Client
+.idea/httpRequests
+
+# Android studio 3.1+ serialized cache file
+.idea/caches/build_file_checksums.ser
+
+.idea/codeStyles
+.idea/inspectionProfiles
+</file>
+
+<file path=".travis.yml">
+sudo: false
+language: python
+dist: xenial
+cache: pip
+
+python:
+  - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
+  - 3.7
+matrix:
+  allow_failures:
+    - python: 3.7
+
+before_install:
+  - pip install -U -r ci/requirements.txt
+
+install:
+  - pip install -U .
+
+script:
+  - python -m coverage run setup.py test
+
+after_script:
+  - python -m codecov
+  - python -m codacy
+
+before_deploy:
+  - python setup.py sdist bdist_wheel
+  - twine check dist/*
+
+deploy:
+  provider: script
+  on:
+    python: '3.6'
+    tags: true
+    repo: althonos/jinja2-fsloader
+  skip_cleanup: true
+  script: twine upload --skip-existing dist/*
+
+notifications:
+  email:
+  - althonosdev@gmail.com
+</file>
+
+<file path="README.rst">
+``jinja2-fsloader`` |star me|
+=============================
+
+.. |star me| image:: https://img.shields.io/github/stars/althonos/jinja2-fsloader.svg?style=social&maxAge=3600&label=Star
+   :target: https://github.com/althonos/jinja2-fsloader/stargazers
+
+*A Jinja2 template loader using PyFilesystem2.*
+
+|build| |repo| |versions| |changelog| |format| |coverage| |grade| |license|
+
+.. |build| image:: https://img.shields.io/travis/althonos/jinja2-fsloader/master.svg?label=travis-ci&style=flat-square
+   :target: https://travis-ci.org/althonos/jinja2-fsloader/
+
+.. |repo| image:: https://img.shields.io/badge/source-GitHub-303030.svg?style=flat-square
+   :target: https://github.com/althonos/jinja2-fsloader
+
+.. |versions| image:: https://img.shields.io/pypi/v/jinja2-fsloader.svg?style=flat-square
+   :target: https://pypi.org/project/jinja2-fsloader
+
+.. |format| image:: https://img.shields.io/pypi/format/jinja2-fsloader.svg?style=flat-square
+   :target: https://pypi.org/project/jinja2-fsloader
+
+.. |grade| image:: https://img.shields.io/codacy/grade/f74bd301468341f59ce664ae129021ef/master.svg?style=flat-square
+   :target: https://www.codacy.com/app/althonos/jinja2-fsloader/dashboard
+
+.. |coverage| image:: https://img.shields.io/codecov/c/github/althonos/jinja2-fsloader/master.svg?style=flat-square
+   :target: https://codecov.io/gh/althonos/jinja2-fsloader
+
+.. |license| image:: https://img.shields.io/pypi/l/jinja2-fsloader.svg?style=flat-square
+   :target: https://choosealicense.com/licenses/mit/
+
+.. |changelog| image:: https://img.shields.io/badge/keep%20a-changelog-8A0707.svg?maxAge=86400&style=flat-square
+   :target: https://github.com/althonos/jinja2-fsloader/blob/master/CHANGELOG.rst
+
+About
+'''''
+
+This library allows you to use PyFilesystem2 as a backend to load templates into
+Jinja2. You can take advantage of the whole ``fs`` ecosystem, which already implements
+drivers for FTP, SSH, SMB, S3, WebDAV servers, ZIP and Tar archives, and
+`many more <https://www.pyfilesystem.org/page/index-of-filesystems/>`_!
+
+
+Installation
+''''''''''''
+
+Install with ``pip``::
+
+    $ pip install --user -U jinja2-fsloader
+
+
+Usage
+'''''
+
+.. code:: Python
+
+    from jinja2_fsloader import FSLoader
+    FSLoader(template_fs, encoding='utf-8', use_syspath=False)
+
+``template_fs``
+    a ``FS`` instance or an `FS URL <https://docs.pyfilesystem.org/en/latest/openers.html>`_
+    where the templates are located.
+``encoding``
+    the encoding of the template files (*utf-8* by default).
+``use_syspath``
+    set to ``True`` for the loader to return the real path or an URL to the template
+    when available (``False`` by default).
+
+
+Examples
+''''''''
+
+.. code:: python
+
+    import jinja2
+    from jinja2_fsloader import FSLoader
+
+    # templates in a ZIP archive
+    env = jinja2.Environment(loader=FSLoader("zip:///path/to/my/templates.zip"))
+
+    # templates in a S3 bucket
+    env = jinja.Environment(loader=FSLoader("s3://mybucket"))
+
+    # templates in memory
+    mem = fs.open_fs('mem://')
+    mem.settext('template.j2', 'This template is {{adjective}}')
+    env = jinja.Environment(loader=FSLoader(mem))
+
+
+See Also
+''''''''
+
+The `complete documentation <https://www.pyfilesystem.org/>`_ of PyFilesystem2 can
+give you a better overview of all the features available in the library.
+</file>
+
+<file path="setup.cfg">
+[metadata]
+name = jinja2-fsloader
+version = file: jinja2_fsloader/_version.txt
+author = Martin Larralde
+author-email = martin.larralde@ens-paris-saclay.fr
+home-page = https://github.com/althonos/jinja2-fsloader/
+description = A Jinja2 template loader using PyFilesystem2
+long-description = file: README.rst
+license = MIT
+license-file = COPYING
+platform = any
+keywords = jinja2, template, loader, pyfilesystem2, pyfilesystem, fs
+classifiers =
+  Development Status :: 4 - Beta
+  Intended Audience :: Developers
+  License :: OSI Approved :: MIT License
+  Operating System :: OS Independent
+  Programming Language :: Python
+  Programming Language :: Python :: 2.7
+  Programming Language :: Python :: 3.4
+  Programming Language :: Python :: 3.5
+  Programming Language :: Python :: 3.6
+  Programming Language :: Python :: 3.7
+  Topic :: Internet :: WWW/HTTP :: Dynamic Content
+  Topic :: System :: Filesystems
+  Topic :: Software Development :: Libraries :: Python Modules
+  Topic :: Text Processing :: Markup :: HTML
+
+project_urls =
+  Bug Reports = https://github.com/althonos/jinja2-fsloader
+  Pyfilesystem2 documentation = https://docs.pyfilesystem.org
+
+[coverage:run]
+include = jinja2_fsloader/*.py
+
+[options]
+zip_safe = true
+include_package_data = true
+python_requires = >= 2.7, != 3.0.*, != 3.1.*, != 3.2.*, != 3.3.*, != 3.5.1
+packages = find:
+test_suite = tests
+setup_requires =
+  setuptools >=39.2
+install_requires =
+  fs ~=2.1
+  jinja2 ~=2.0
+tests_require =
+  contexter ~=0.1.4
+  mock
+
+[bdist_wheel]
+universal = 1
+
+[check]
+metadata = true
+restructuredtext = true
+strict = true
+
+[sdist]
+formats  = zip
+
+[coverage:report]
+show_missing = true
+exclude_lines =
+  pragma: no cover
+  if typing.TYPE_CHECKING:
+  @abc.abstractmethod
+  @abc.abstractproperty
+  raise NotImplementedError
+  return NotImplemented
+
+[green]
+file-pattern = test_*.py
+verbose = 2
+no-skip-report = true
+quiet-stdout = true
+run-coverage = true
+
+[pydocstyle]
+match-dir = (?!tests)(?!resources)(?!docs)[^\.].*
+match = (?!test)(?!setup)[^\._].*\.py
+inherit = false
+ignore = D200, D203, D213, D406, D407   # Google conventions
+
+[flake8]
+max-line-length = 99
+doctests = True
+exclude = .git, .eggs, __pycache__, tests/, docs/, build/, dist/
+ignore = D200, D203, D213, D406, D407   # Google conventions
+
+[mypy]
+ignore_missing_imports = true
+
+[mypy-moclo.*]
+disallow_any_decorated = false
+disallow_any_generics = false
+disallow_any_unimported = true
+disallow_subclassing_any = true
+disallow_untyped_calls = false
+disallow_untyped_defs = false
+ignore_missing_imports = false
+warn_unused_ignores = false
+warn_return_any = false
+</file>
+
+<file path="jinja2_fsloader/_version.txt">
+0.3.0
+</file>
+
+<file path="jinja2_fsloader/__init__.py">
+"""jinja2_fsloader - A Jinja2 template loader using PyFilesystem2."""
+
+import sys
+
+import fs
+import fs.errors
+import fs.path
+import jinja2
+import pkg_resources
+
+__author__ = "Martin Larralde <martin.larralde@ens-paris-saclay.fr>"
+__license__ = "MIT"
+__version__ = (
+    pkg_resources.resource_string(__name__, "_version.txt").decode("utf-8").strip()
+)
+
+
+class FSLoader(jinja2.BaseLoader):
+    """Loads template from a PyFilesystem2.
+
+    The loader is created with a :class:`~fs.base.FS` instance, or a FS URL
+    which is used to search for the templates::
+
+    >>> zip_loader = FSLoader("zip:///path/to/my/templates.zip")
+    >>> ftp_loader = FSLoader(fs.ftpfs.FTPFS("server.net"))
+    >>> dir_loader = FSLoader("./templates/", fs_filter=["*.html"])
+
+    Per default the template encoding is ``'utf-8'`` which can be changed
+    by setting the `encoding` parameter to something else. The `use_syspath`
+    parameter can be opted in to provide Jinja2 the system path to the query
+    if it exist, otherwise it will only return the internal filesystem path.
+    The optional `fs_filter` parameter is a list of wildcard patterns like
+    ``['*.html', '*.tpl']``. If present, only the matching files in the
+    filesystem will be loaded as templates.
+
+    .. seealso:: the `PyFilesystem docs <https://docs.pyfilesystem.org/>`_.
+
+    """
+
+    def __init__(
+        self, template_fs, encoding="utf-8", use_syspath=False, fs_filter=None
+    ):
+        self.filesystem = fs.open_fs(template_fs)
+        self.use_syspath = use_syspath
+        self.encoding = encoding
+        self.fs_filter = fs_filter
+
+    def get_source(self, environment, template):
+        template = _to_unicode(template)
+        if not self.filesystem.isfile(template):
+            raise jinja2.TemplateNotFound(template)
+        try:
+            mtime = self.filesystem.getdetails(template).modified
+            def reload():
+                return self.filesystem.getdetails(template).modified > mtime
+        except fs.errors.MissingInfoNamespace:
+            def reload():
+                return True
+        with self.filesystem.open(template, encoding=self.encoding) as input_file:
+            source = input_file.read()
+        if self.use_syspath:
+            if self.filesystem.hassyspath(template):
+                return source, self.filesystem.getsyspath(template), reload
+            elif self.filesystem.hasurl(template):
+                return source, self.filesystem.geturl(template), reload
+        return source, template, reload
+
+    def list_templates(self):
+        found = set()
+        for file in self.filesystem.walk.files(filter=self.fs_filter):
+            found.add(fs.path.relpath(file))
+        return sorted(found)
+
+
+if sys.version_info[0] == 2:
+
+    def _to_unicode(path):
+        """Convert str in Python 2 to unicode."""
+        return path.decode("utf-8") if type(path) is not unicode else path
+else:
+
+    def _to_unicode(path):
+        return path
+</file>
+
+</files>
