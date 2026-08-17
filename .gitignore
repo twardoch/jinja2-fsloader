@@ -199,3 +199,6 @@ fabric.properties
 .idea/codeStyles
 .idea/inspectionProfiles
 
+.idea/
+.DS_Store
+*.pyc
